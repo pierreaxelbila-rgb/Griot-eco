@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F3EEE4">
+<title>Le Griot Éco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,700;1,400&family=Fira+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a serious weekly business paper, calm and trustworthy
+   IDEA: a printed African business weekly in your pocket
+   PICTURE: the front page itself — masthead, big headline, the number
+   COLOUR and TYPE: newsprint, ink, latérite red stamp; Gelasio + Fira Sans (chosen by the owner)
+   LAYOUT: one phone column, rules between sections, four tabs */
+:root{color-scheme:light dark;--bg:light-dark(#F3EEE4,#15130F);--ink:light-dark(#1C1A17,#EDE6DA);--mute:light-dark(#6B6358,#A39886);--line:light-dark(#CFC6B6,#3A342C);--red:light-dark(#A3402A,#D9603F);--green:light-dark(#2F5D3A,#6FAF7E);--ph:light-dark(#BDB4A5,#3A342C);--card:light-dark(#FBF8F2,#1E1B16)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Fira Sans',system-ui,sans-serif;overflow-x:clip}
+.app{max-width:520px;margin:0 auto;min-height:100vh;padding:0 20px 96px}
+a{color:inherit}
+.serif{font-family:Gelasio,Georgia,serif}
+.mast{display:flex;align-items:center;justify-content:space-between;padding:16px 0 10px;border-bottom:3px double var(--ink)}
+.mast h1{font:700 26px/1.1 Gelasio,Georgia,serif;margin:0;letter-spacing:-.3px}.mast h1 i{font-weight:400}
+.dateline{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);padding:7px 0;border-bottom:1px solid var(--ink)}
+.kick{font-size:13px;font-weight:600;color:var(--red);margin:18px 0 4px}
+h2.head{font:700 clamp(28px,7.5vw,36px)/1.08 Gelasio,Georgia,serif;letter-spacing:-.5px;margin:4px 0 8px;text-wrap:balance}
+h3{font:700 20px/1.2 Gelasio,Georgia,serif;margin:0 0 6px}
+.dek{font:italic 17px/1.45 Gelasio,Georgia,serif;margin:0}
+.meta{font-size:13px;color:var(--mute)}
+.rule{border:0;border-top:1px solid var(--ink);margin:20px 0 4px}
+.body p{font:17px/1.6 Gelasio,Georgia,serif;margin:0 0 14px}
+.drop::first-letter{float:left;font:700 54px/.85 Gelasio,serif;padding:5px 6px 0 0;color:var(--red)}
+.pull{border-left:3px solid var(--red);padding:2px 0 2px 14px;margin:16px 0;font:italic 19px/1.4 Gelasio,serif}
+.ph{background:var(--ph);background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 2px,transparent 2px 9px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--ink);font-size:13px;text-align:center;padding:16px;border:0;width:100%;font-family:inherit;cursor:pointer}
+.ph.big{height:190px;margin:14px 0 0}
+.cap{font-size:13px;color:var(--mute);margin:6px 0 0}.cap b{color:var(--ink)}
+.fig{display:flex;gap:14px;align-items:flex-start;margin-top:6px}
+.fig .n{flex:none;font:700 clamp(48px,14vw,60px)/.9 Gelasio,serif;letter-spacing:-2px;white-space:nowrap}
+.row{display:flex;align-items:baseline;gap:10px;padding:12px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .co{font:700 17px Gelasio,serif}.row .amt{margin-left:auto;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+ul.pouls{list-style:none;padding:0;margin:0}ul.pouls li{padding:10px 0;border-top:1px solid var(--line);font-size:15px}ul.pouls li:first-child{border:0}
+.btn{display:block;width:100%;min-height:46px;font:600 15px 'Fira Sans',sans-serif;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;margin-top:12px}
+.btn.solid{background:var(--red);border-color:var(--red);color:#F3EEE4}
+.btn:focus-visible,.tab:focus-visible,.seg button:focus-visible,.sw:focus-visible,.chip:focus-visible,.ph:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.card{border:1px solid var(--ink);padding:14px;margin-top:12px;cursor:pointer;background:var(--card)}
+.audio{display:flex;align-items:center;gap:12px;border:1px solid var(--ink);padding:10px 12px;margin:14px 0}
+.play{width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--bg);border:0;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.video{position:relative;height:200px;background:#2b2722;display:flex;align-items:center;justify-content:center;color:#F3EEE4;margin:8px -20px 0}
+.vbadge{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.7);font-size:12px;padding:3px 8px}
+.opp{padding:12px 0;border-top:1px solid var(--line)}.opp:first-of-type{border-top:1px solid var(--ink)}
+.dl{display:inline-block;font-size:12px;font-weight:600;border:1px solid var(--red);color:var(--red);padding:2px 7px;margin-top:6px}
+.src{font-size:14px;padding:7px 0;border-top:1px solid var(--line)}
+.seg{display:flex;border:1px solid var(--ink);margin:10px 0}
+.seg button{flex:1;min-height:40px;background:transparent;border:0;border-right:1px solid var(--ink);color:var(--ink);font:500 14px 'Fira Sans',sans-serif;cursor:pointer}
+.seg button:last-child{border:0}.seg button.on{background:var(--ink);color:var(--bg)}
+.set{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line)}
+.set .l{font-weight:500}.set .s{font-size:13px;color:var(--mute)}
+.sw{margin-left:auto;width:50px;height:30px;border-radius:999px;background:var(--line);border:0;position:relative;cursor:pointer;flex-shrink:0}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .15s}
+.sw[aria-checked=true]{background:var(--ink)}.sw[aria-checked=true]::after{left:23px;background:var(--bg)}
+.sec{font-size:13px;font-weight:600;margin:22px 0 6px}
+.chip{display:inline-block;font:14px 'Fira Sans',sans-serif;padding:8px 12px;border:1px solid var(--ink);margin:0 6px 8px 0;background:transparent;color:var(--ink);cursor:pointer;min-height:40px}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+select{font:16px 'Fira Sans',sans-serif;padding:6px;background:var(--bg);color:var(--ink);border:1px solid var(--ink);margin-left:auto}
+.alert{display:flex;gap:12px;padding:13px 0;border-top:1px solid var(--line)}
+.alert .w{font-size:12px;color:var(--mute);width:50px;flex-shrink:0;padding-top:3px}
+.alert .t{font:700 16px/1.3 Gelasio,serif}.alert.new .t::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin:0 7px 2px 0}
+.lock{margin-top:8px}.lock .blur{filter:blur(4px);opacity:.5;user-select:none;margin:0}.lock .blur p{margin:6px 0}
+.gate{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--ink);display:flex;justify-content:center;padding:6px 0 max(10px,env(safe-area-inset-bottom))}
+.tabs div{display:flex;max-width:520px;width:100%}
+.tab{flex:1;background:transparent;border:0;color:var(--mute);font:12px 'Fira Sans',sans-serif;cursor:pointer;min-height:50px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tab.on{color:var(--ink);font-weight:600}
+.back{background:none;border:0;color:var(--ink);font:15px 'Fira Sans',sans-serif;padding:14px 0 12px;cursor:pointer;min-height:44px}
+.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink)}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+.note{font-size:12px;color:var(--mute);margin-top:14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.onb{min-height:100vh;display:flex;flex-direction:column;padding:28px 0 32px}
+.steps{display:flex;gap:6px;margin-bottom:26px}.steps i{flex:1;height:3px;background:var(--line)}.steps i.on{background:var(--red)}
+.field{display:block;margin-top:16px}.field span{display:block;font-size:14px;font-weight:500;margin-bottom:6px}
+.field input{width:100%;font:16px 'Fira Sans',sans-serif;padding:12px;border:1px solid var(--ink);background:var(--card);color:var(--ink)}
+.field input:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+.err{color:var(--red);font-size:14px;min-height:20px;margin-top:8px}
+.link{background:none;border:0;color:var(--ink);text-decoration:underline;font:15px 'Fira Sans',sans-serif;cursor:pointer;min-height:44px;margin-top:8px}
+.hero{border-top:3px double var(--ink);border-bottom:1px solid var(--ink);padding:22px 0;margin:22px 0}
+.who{display:flex;align-items:center;gap:12px;padding:12px 0}
+.av{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font:700 18px Gelasio,serif;flex-shrink:0}
+.why{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line)}.why:first-of-type{border-top:1px solid var(--ink)}
+.why .k{font:700 22px/1 Gelasio,serif;color:var(--red);width:26px;flex-shrink:0}
+.why b{font:700 17px/1.3 Gelasio,serif;display:block;margin-bottom:2px}.why p{margin:0;font-size:15px;color:var(--mute)}
+.chart{width:100%;height:auto;display:block;margin-top:8px}
+.big2{font:700 clamp(36px,10vw,46px)/1 Gelasio,serif;letter-spacing:-1px;white-space:nowrap}
+.duo .big2{font-size:clamp(24px,7vw,34px)}
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-top:10px}
+.bar{height:10px;background:var(--ink);margin:8px 0 4px}.bar.r{background:var(--red)}
+ol.steps2{padding-left:20px;margin:6px 0}ol.steps2 li,ul.risks li{margin:8px 0;font-size:15px}ul.risks{padding-left:18px;margin:6px 0}
+.disc{border:1px solid var(--ink);padding:10px 12px;font-size:13px;margin:14px 0}
+.opt{display:block;width:100%;text-align:left;min-height:48px;padding:12px 14px;margin-top:8px;border:1px solid var(--ink);background:var(--card);color:var(--ink);font:16px/1.35 'Fira Sans',sans-serif;cursor:pointer}
+.opt:disabled{cursor:default;color:var(--ink);opacity:1}
+.opt.ok{border:2px solid var(--green);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+.opt.no{border:2px solid var(--red);background:color-mix(in srgb,var(--red) 12%,var(--card))}
+.prog{height:8px;background:var(--line);margin:10px 0 6px}.prog i{display:block;height:100%;background:var(--red);transition:width .3s}
+.les{display:flex;gap:14px;align-items:center;width:100%;padding:14px 0;border:0;border-top:1px solid var(--line);background:none;color:var(--ink);text-align:left;font:inherit;cursor:pointer;min-height:60px}
+.les .k{font:700 22px/1 Gelasio,serif;color:var(--red);width:26px;flex:none}
+.les .st{margin-left:auto;font-size:13px;color:var(--mute);white-space:nowrap;padding-left:8px}.les .st.ok{color:var(--green);font-weight:600}
+.ex{background:var(--card);border:1px solid var(--line);padding:12px 14px;margin:14px 0;font-size:15px}
+.fb{margin-top:14px;font-size:15px}.fb b{display:block;font:700 18px Gelasio,serif;margin-bottom:2px}
+.opt:focus-visible,.les:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="logo" viewBox="0 0 100 100"><rect x="4" y="4" width="92" height="92" fill="#A3402A"/><rect x="11" y="11" width="78" height="78" fill="none" stroke="#F3EEE4" stroke-width="2.5"/><text x="50" y="74" text-anchor="middle" font-family="Gelasio,Georgia,serif" font-weight="700" font-size="66" fill="#F3EEE4">G</text></symbol>
+<symbol id="cam" viewBox="0 0 24 24"><path d="M3 7h4l2-3h6l2 3h4v13H3z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+<symbol id="cowry" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="7.5" ry="10" fill="#E9DFC9" stroke="#8A6A3B" stroke-width="1.4"/><path d="M12 4.5c-1.2 2.5-1.2 12.5 0 15" fill="none" stroke="#8A6A3B" stroke-width="1.6"/><path d="M10.4 8h1.4M10.2 11h1.6M10.2 14h1.6M10.4 17h1.4" stroke="#8A6A3B" stroke-width="1.1"/></symbol>
+</defs></svg>
+<main class="app" id="view"></main>
+<nav class="tabs" aria-label="Navigation"><div id="tabs"></div></nav>
+<div class="toast" id="toast" role="status"></div>
+<script>
+{
+const T={
+fr:{edu:"Apprendre",eduT:"L'École du Griot",eduS:"Des leçons de 3 minutes et des quiz pour comprendre l'argent, la Bourse et l'investissement en Afrique. Chaque bonne réponse rapporte des cauris, la monnaie de nos ancêtres.",eduCard:"7 leçons et des quiz pour comprendre l'argent et l'investissement, en gagnant des cauris.",lvl:"Votre niveau",lvls:["Apprenti","Commerçant","Investisseur","Griot de la finance"],cauris:"cauris",nextLvl:"Encore {n} cauris pour devenir {l}",maxLvl:"Niveau maximum atteint. Bravo !",lessons:"Les leçons",min3:"3 min",qs:"questions",lesN:"Leçon",toQuiz:"Passer au quiz",exK:"Exemple africain",qOf:"Question",good:"Bonne réponse !",bad:"Pas tout à fait.",nxt:"Question suivante",seeRes:"Voir mon résultat",finT:"Leçon terminée",finS:"{g} bonne(s) réponse(s) sur {n}",noNew:"Pas de nouveaux cauris cette fois : faites mieux que votre meilleur score pour en gagner.",nextLes:"Leçon suivante",retry:"Refaire le quiz",backE:"‹ L'École",eduD:"Contenu éducatif, pas un conseil d'investissement.",
+inv:"Investir",invK:"Comprendre pour investir",invT:"Qui finance l'Afrique, et comment y prendre part ?",invD:"Information, pas un conseil d'investissement. Les performances passées ne garantissent pas les performances futures.",
+baro:"Le baromètre des Bourses",brvmL:"BRVM Composite · Bourse régionale de l'Afrique de l'Ouest (8 pays)",brvmS:"Points de l'indice, de fin 2025 à fin octobre 2026",ytd:"depuis le 1er janvier (au 4 sept.)",otherX:"Lagos, Nairobi, Johannesburg et Casablanca arrivent bientôt dans le baromètre.",
+diaT:"L'argent qui entre chaque année",flows:[["Diaspora (transferts)",124.2,"124,2 Md$"],["Investisseurs étrangers (IDE)",70,"70 Md$"],["Capital-risque dans les startups (janv.-oct. 2026)",2.4,"2,4 Md$"]],flowS:"Montants de 2025, sauf mention. L'investissement étranger de 2025 est le troisième plus élevé depuis 1990.",dfi:"Les banques de développement (SFI, FMO, Proparco…) sont aussi très présentes : elles financent une grande partie des levées de fonds, comme celle d'East Africa Foods.",stockT:"Le trésor qui dort sur place",stockN:"775 Md$",stockL:"gérés par les fonds de pension (455 Md$) et les assureurs (320 Md$) africains",stockP:"C'est l'épargne des Africains eux-mêmes, et de loin la plus grosse réserve. Mais la plupart de ces fonds dorment dans des obligations d'État. Une petite part orientée vers les entreprises et les infrastructures changerait l'échelle du continent : c'est un sujet que nous suivrons de près.",
+eurT:"Un atout méconnu de la BRVM",eurP:"Le franc CFA d'Afrique de l'Ouest est lié à l'euro par un taux fixe (1 € = 655,957 FCFA). Pour un investisseur de la zone euro, et pour les épargnants de la zone CFA qui pensent en euros, le risque de change sur la BRVM est donc limité, tant que cette parité est maintenue.",
+guideT:"Investir à la BRVM, depuis l'Afrique ou l'étranger",guide:["Choisir un intermédiaire agréé (une SGI) et vérifier son agrément sur le site du régulateur, l'AMF-UMOA.","Ouvrir un compte titres, en agence ou à distance : pièce d'identité, justificatif de domicile.","Comparer les frais avant de signer : commission sur chaque ordre, frais de tenue de compte, frais de virement.","Commencer petit et répartir sur plusieurs entreprises et secteurs."],
+riskT:"Les risques à connaître",risk:["Liquidité : certaines actions s'échangent peu, il peut être difficile de revendre vite.","Concentration : un petit nombre d'entreprises pèse lourd dans l'indice.","Fiscalité : les dividendes sont imposés différemment selon les pays, renseignez-vous."],
+trfT:"Envoyer moins cher",trfF:"de frais en moyenne pour envoyer 200 $ vers l'Afrique hors banque (fin 2025)",trfP:"L'objectif international est de moins de 3 %. Comparez toujours le coût total : les frais affichés et la marge sur le taux de change. Notre comparateur des services de transfert arrive bientôt.",
+invCard:"Qui finance l'Afrique, le baromètre des Bourses, comment investir.",open:"Ouvrir ›",backU:"‹ La Une",wel1:"Bienvenue dans Le Griot Éco.",wel2:"En Afrique, le griot est celui qui garde la mémoire et raconte les histoires. Nous racontons celles de l'économie africaine : les entrepreneurs qui bâtissent, l'argent qui circule, les idées qui changent le continent.",discover:"Découvrir",
+whyT:"Pourquoi Le Griot Éco ?",whyS:"Ce qui nous rend différents.",
+why:[["100 % Afrique","Pas d'actualité mondiale noyée dans le flot : uniquement l'économie africaine, de Kinshasa à Lagos, de Dakar à Nairobi."],["5 minutes, pas plus","Une édition claire chaque mardi. L'essentiel, sans jargon, à lire dans le bus."],["Chaque fait a sa source","Chaque chiffre renvoie au média qui l'a publié. Vous vérifiez par vous-même."],["Toute l'Afrique, pas seulement les « quatre grands »","En octobre 2026, le Nigeria, l'Égypte, le Kenya et l'Afrique du Sud n'ont reçu que 46 % de l'argent des startups. Nous suivons aussi le Maroc, la Tanzanie, le Sénégal, la RDC…"],["Pour investir, pas seulement s'informer","Épargne africaine, diaspora, investisseurs étrangers : nous suivons qui finance l'Afrique et expliquons comment y prendre part, chiffres et risques à l'appui."],["Les urgences en Flash, vérifiées","Rachat, faillite, chute en Bourse : vous êtes prévenu, et seulement quand au moins deux médias fiables confirment."],["Des opportunités concrètes","Concours, subventions et programmes ouverts aux entrepreneurs africains, avec les dates."],["Des histoires, pas seulement des chiffres","La startup à la loupe et la série vidéo Empires d'Afrique racontent comment les entreprises se construisent."],["À lire ou à écouter","Chaque édition peut être lue à voix haute : en voiture, en cuisine, en marchant."],["En français et en anglais","Pensé pour l'Afrique francophone et anglophone, et pour la diaspora."],["Léger pour vos données","Le mode économie de données ne charge les photos et vidéos que si vous le voulez."],["Clair sur l'argent","L'essentiel reste gratuit. Un contenu payé par une entreprise sera toujours signalé comme tel."],["Apprendre en jouant","L'École du Griot : des leçons de 3 minutes et des quiz pour comprendre l'argent, la Bourse et l'investissement africain, en gagnant des cauris."]],whyMore:"Voir les 6 autres raisons",whyLess:"Voir moins",welT:"L'économie africaine, chaque mardi, en 5 minutes.",welS:"Les levées de fonds, les entreprises qui réussissent, les opportunités. Avec les sources.",start:"Créer mon compte",have:"J'ai déjà un compte",chooseLang:"Choisissez votre langue",
+accT:"Créer votre compte",accS:"Gratuit. Vous recevrez l'édition chaque mardi.",fname:"Prénom",mail:"Adresse e-mail",next:"Continuer",errName:"Indiquez votre prénom.",errMail:"Cette adresse e-mail ne semble pas valide.",
+loginT:"Content de vous revoir",loginS:"Entrez votre e-mail : nous vous enverrons un lien de connexion, sans mot de passe.",sendLink:"Recevoir mon lien",
+intT:"Ce qui vous intéresse",intS:"Choisissez au moins un pays. Vous pourrez changer plus tard.",errInt:"Choisissez au moins un pays.",
+notT:"Restez informé",notS:"Choisissez comment Le Griot Éco vous prévient.",finish:"Ouvrir Le Griot Éco",hello:"Bienvenue",
+logout:"Se déconnecter",profile:"Votre profil",prelaunch:"Compte enregistré sur cet appareil. La connexion par e-mail s'activera à la mise en ligne officielle.",une:"La Une",ent:"Entreprises",alr:"Alertes",acc:"Compte",date:"Mardi 24 novembre 2026",no:"N° 1",week:"L'édition de la semaine",
+title:"L'argent quitte les grandes capitales",dek:"Le Maroc et la Tanzanie attirent presque autant que le Nigeria.",read:"5 min de lecture",
+listen:"Écouter l'édition",stop:"Arrêter",mot:"Le mot du Griot",motT:"Bienvenue dans la première édition du Griot Éco. Chaque mardi, en 5 minutes, où va l'argent en Afrique et qui construit les empires de demain. Cette semaine, une surprise : l'argent ne va plus seulement là où on l'attend.",
+num:"Le chiffre",numT:"de l'argent investi dans les startups en octobre est allé au Nigeria, à l'Égypte, au Kenya et à l'Afrique du Sud. Leur part la plus basse depuis novembre 2022. Le Maroc et la Tanzanie ont chacun attiré 40 M$.",
+raised:"Ils ont levé des fonds",loupe:"La startup à la loupe",loupeT:"Du champ au marché, sans rien perdre",loupeD:"East Africa Foods (Tanzanie) lève 40 M$ pour sauver les récoltes des petits fermiers.",readArt:"Lire l'article ›",
+pouls:"Le pouls de l'économie",opp:"Opportunités",oppI:"Concours, subventions et investisseurs pour les entrepreneurs africains.",video:"En vidéo",vidT:"Empires d'Afrique · épisode 1 : Dangote",vidS:"Bientôt disponible",
+retenir:"À retenir",retenirT:"Sur les dix premiers mois de 2026, les startups africaines ont levé environ 2,4 milliards de dollars, 12 % de moins qu'en 2025. L'argent est plus rare : les investisseurs choisissent les projets qui répondent à un vrai besoin — nourriture, énergie, santé, paiements.",
+sources:"Sources",photo:"Photo à venir",tapLoad:"Toucher pour charger",
+artBy:"Par la rédaction · 3 min",artP1:"En Afrique, une grande partie des récoltes se perd entre le champ et le marché. Il manque des entrepôts, des camions et des usines pour transformer.",
+artPull:"Son objectif : travailler avec 100 000 petits fermiers.",artP2:"East Africa Foods organise toute la chaîne : elle achète aux petits fermiers, stocke, transforme et distribue. En octobre 2026, elle a levé 40 millions de dollars auprès d'InfraCo Africa, Oikocredit et FMO.",
+artP3:"La leçon : les plus belles entreprises africaines résolvent souvent un problème très concret, que tout le monde voit tous les jours.",artCap:"Un entrepôt d'East Africa Foods, en Tanzanie.",back:"‹ La Une",
+entT:"L'espace Entreprises arrive bientôt",entD:"Bientôt, chaque grande entreprise africaine aura sa fiche : ce que saluent les médias vérifiés, ce qui inquiète, et les pistes d'amélioration, toujours avec les sources.",
+salue:"Ce que saluent les médias",gate:"La suite sera réservée à Premium",gateS:"Les inquiétudes, les pistes d'amélioration et toutes les sources.",notify:"Me prévenir du lancement",exemple:"Exemple de fiche",
+all:"Tout",fund:"Levées",rem:"Rappels",today:"Cette semaine",lang:"Langue",receive:"Recevoir Le Griot Éco",email:"Par e-mail",emailS:"Chaque mardi matin",notif:"Notifications",notifS:"Nouvelle édition, Flash et grosses levées",
+remind:"Rappel de lecture",remindS:"Le jour de votre choix",eco:"Économie de données",ecoS:"Photos et vidéos au toucher seulement",countries:"Pays suivis",sectors:"Secteurs suivis",
+liveNote:"Les e-mails et les notifications sur le téléphone s'activeront à la mise en ligne officielle. Vos choix sont gardés sur cet appareil.",saved:"Préférence enregistrée",noAudio:"La lecture audio n'est pas disponible sur ce navigateur.",done:"C'est noté, vous serez prévenu.",
+days:["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"],ago:"",
+sectorsL:["Fintech","Agriculture","Énergie","Santé","Transport","Mines"],tef:"Programme d'entrepreneuriat de la Fondation Tony Elumelu",tefS:"5 000 $ de capital non remboursable, formation et mentorat, ouvert aux 54 pays africains.",tefD:"L'édition 2026 était ouverte du 1er janvier au 1er mars",
+fc:"First Circle Africa Fund I",fcS:"Nouveau fonds de 26 M$ (Kampala) qui investit dans les fintechs africaines.",fcD:"Investisseur actif"},
+en:{edu:"Learn",eduT:"The Griot's School",eduS:"3-minute lessons and quizzes to understand money, stock markets and investing in Africa. Every right answer earns cowries, the currency of our ancestors.",eduCard:"7 lessons and quizzes to understand money and investing, while earning cowries.",lvl:"Your level",lvls:["Apprentice","Trader","Investor","Finance Griot"],cauris:"cowries",nextLvl:"{n} more cowries to become {l}",maxLvl:"Top level reached. Well done!",lessons:"Lessons",min3:"3 min",qs:"questions",lesN:"Lesson",toQuiz:"Take the quiz",exK:"African example",qOf:"Question",good:"Correct!",bad:"Not quite.",nxt:"Next question",seeRes:"See my result",finT:"Lesson complete",finS:"{g} correct out of {n}",noNew:"No new cowries this time: beat your best score to earn more.",nextLes:"Next lesson",retry:"Retake the quiz",backE:"‹ School",eduD:"Educational content, not investment advice.",
+inv:"Invest",invK:"Understand before you invest",invT:"Who funds Africa, and how can you take part?",invD:"Information, not investment advice. Past performance does not guarantee future results.",
+baro:"Stock market barometer",brvmL:"BRVM Composite · West Africa's regional exchange (8 countries)",brvmS:"Index points, end of 2025 to end of October 2026",ytd:"since 1 January (to 4 Sept)",otherX:"Lagos, Nairobi, Johannesburg and Casablanca are coming to the barometer soon.",
+diaT:"Money coming in each year",flows:[["Diaspora (remittances)",124.2,"$124.2bn"],["Foreign investors (FDI)",70,"$70bn"],["Venture capital in startups (Jan-Oct 2026)",2.4,"$2.4bn"]],flowS:"2025 amounts unless stated. 2025 foreign investment was the third-highest since 1990.",dfi:"Development banks (IFC, FMO, Proparco…) are also very active: they fund many funding rounds, such as East Africa Foods'.",stockT:"The treasure sleeping at home",stockN:"$775bn",stockL:"managed by African pension funds ($455bn) and insurers ($320bn)",stockP:"This is Africans' own savings, by far the biggest pool. But most of it sits in government bonds. Steering even a small share towards companies and infrastructure would change the continent's scale: a story we will follow closely.",
+eurT:"A little-known BRVM edge",eurP:"The West African CFA franc is pegged to the euro at a fixed rate (€1 = 655.957 CFA). For a euro-zone investor, currency risk on the BRVM is limited, as long as the peg holds.",
+guideT:"Investing on the BRVM, from Africa or abroad",guide:["Choose a licensed broker (an SGI) and check its licence on the regulator's website, AMF-UMOA.","Open a securities account, in a branch or remotely: ID and proof of address.","Compare fees before signing: commission per order, account fees, transfer fees.","Start small and spread across several companies and sectors."],
+riskT:"Risks to know",risk:["Liquidity: some shares trade rarely, so selling quickly can be hard.","Concentration: a few companies weigh heavily in the index.","Tax: dividends are taxed differently by country, check yours."],
+trfT:"Send money for less",trfF:"average fee to send $200 to Africa outside banks (late 2025)",trfP:"The international target is under 3%. Always compare the total cost: the fee shown and the exchange-rate margin. Our money-transfer comparison is coming soon.",
+invCard:"Who funds Africa, the stock market barometer, how to invest.",open:"Open ›",backU:"‹ Front page",wel1:"Welcome to Le Griot Éco.",wel2:"In Africa, the griot keeps memory alive and tells the stories. We tell the stories of Africa's economy: the founders who build, the money that moves, the ideas changing the continent.",discover:"Discover",
+whyT:"Why Le Griot Éco?",whyS:"What makes us different.",
+why:[["100% Africa","No global news to wade through: only Africa's economy, from Kinshasa to Lagos, Dakar to Nairobi."],["5 minutes, no more","One clear edition every Tuesday. The essentials, no jargon, read it on the bus."],["Every fact has a source","Every number links to the outlet that published it. Check it yourself."],["All of Africa, not just the 'Big Four'","In October 2026, Nigeria, Egypt, Kenya and South Africa received only 46% of startup funding. We also follow Morocco, Tanzania, Senegal, DR Congo…"],["To invest, not just to read","African savings, the diaspora, foreign investors: we track who funds Africa and explain how to take part, with numbers and risks."],["Verified Flash alerts","Takeovers, bankruptcies, market crashes: you're alerted, and only once at least two trusted outlets confirm."],["Real opportunities","Competitions, grants and programmes open to African founders, with dates."],["Stories, not just numbers","Startup in focus and the African Empires video series tell how companies are built."],["Read it or listen","Every edition can be read aloud: driving, cooking, walking."],["In French and English","Built for French- and English-speaking Africa, and the diaspora."],["Light on your data","Data saver loads photos and videos only when you choose."],["Clear about money","The essentials stay free. Any content paid for by a company will always be labelled."],["Learn by playing","The Griot's School: 3-minute lessons and quizzes to understand money, stock markets and investing in Africa, while earning cowries."]],whyMore:"See 6 more reasons",whyLess:"See less",welT:"African business, every Tuesday, in 5 minutes.",welS:"Funding rounds, winning companies, opportunities. With sources.",start:"Create my account",have:"I already have an account",chooseLang:"Choose your language",
+accT:"Create your account",accS:"Free. You'll get the edition every Tuesday.",fname:"First name",mail:"Email address",next:"Continue",errName:"Please enter your first name.",errMail:"This email address doesn't look valid.",
+loginT:"Welcome back",loginS:"Enter your email: we'll send you a sign-in link, no password needed.",sendLink:"Send my link",
+intT:"What interests you",intS:"Pick at least one country. You can change this later.",errInt:"Pick at least one country.",
+notT:"Stay informed",notS:"Choose how Le Griot Éco keeps you posted.",finish:"Open Le Griot Éco",hello:"Welcome",
+logout:"Sign out",profile:"Your profile",prelaunch:"Account saved on this device. Email sign-in will switch on at the official launch.",une:"Front page",ent:"Companies",alr:"Alerts",acc:"Account",date:"Tuesday, 24 November 2026",no:"No. 1",week:"This week's edition",
+title:"Money is leaving the big hubs",dek:"Morocco and Tanzania now attract almost as much as Nigeria.",read:"5 min read",
+listen:"Listen to this edition",stop:"Stop",mot:"From the Griot",motT:"Welcome to the first edition of Le Griot Éco. Every Tuesday, in 5 minutes: where money goes in Africa and who is building tomorrow's empires. This week, a surprise: money no longer goes only where you expect.",
+num:"The number",numT:"of October's startup funding went to Nigeria, Egypt, Kenya and South Africa — their lowest share since November 2022. Morocco and Tanzania each attracted $40M.",
+raised:"Who raised money",loupe:"Startup in focus",loupeT:"From farm to market, with nothing lost",loupeD:"East Africa Foods (Tanzania) raises $40M to save smallholder harvests.",readArt:"Read the article ›",
+pouls:"Economy pulse",opp:"Opportunities",oppI:"Competitions, grants and investors for African entrepreneurs.",video:"Video",vidT:"African Empires · episode 1: Dangote",vidS:"Coming soon",
+retenir:"The takeaway",retenirT:"In the first ten months of 2026, African startups raised about $2.4 billion, 12% less than in 2025. Money is scarcer, so investors pick projects that meet a real need — food, energy, health, payments.",
+sources:"Sources",photo:"Photo coming",tapLoad:"Tap to load",
+artBy:"By the newsroom · 3 min",artP1:"In Africa, a large share of harvests is lost between the farm and the market. Warehouses, trucks and processing plants are missing.",
+artPull:"Its goal: working with 100,000 smallholder farmers.",artP2:"East Africa Foods runs the whole chain: it buys from smallholders, stores, processes and distributes. In October 2026 it raised $40 million from InfraCo Africa, Oikocredit and FMO.",
+artP3:"The lesson: Africa's best companies often solve a very concrete problem that everyone sees every day.",artCap:"An East Africa Foods warehouse in Tanzania.",back:"‹ Front page",
+entT:"The Companies section is coming soon",entD:"Soon, every major African company will have its own profile: what trusted media praise, what worries them, and how it could improve — always with sources.",
+salue:"What the media praise",gate:"The rest will be for Premium",gateS:"Concerns, ways to improve and every source.",notify:"Notify me at launch",exemple:"Sample profile",
+all:"All",fund:"Funding",rem:"Reminders",today:"This week",lang:"Language",receive:"Get Le Griot Éco",email:"By email",emailS:"Every Tuesday morning",notif:"Notifications",notifS:"New edition, Flash alerts and big deals",
+remind:"Reading reminder",remindS:"On the day you choose",eco:"Data saver",ecoS:"Photos and videos only when tapped",countries:"Countries you follow",sectors:"Sectors you follow",
+liveNote:"Emails and phone notifications will switch on at the official launch. Your choices are kept on this device.",saved:"Preference saved",noAudio:"Audio is not available in this browser.",done:"Done — we'll let you know.",
+days:["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+sectorsL:["Fintech","Agriculture","Energy","Health","Transport","Mining"],tef:"Tony Elumelu Foundation Entrepreneurship Programme",tefS:"$5,000 non-refundable seed capital, training and mentoring, open to all 54 African countries.",tefD:"The 2026 round ran from 1 January to 1 March",
+fc:"First Circle Africa Fund I",fcS:"New $26M fund (Kampala) investing in African fintechs.",fcD:"Active investor"}
+};
+const DEALS=[["MNT-Halan",{fr:"Égypte · fintech, entrée en Bourse",en:"Egypt · fintech, IPO"},{fr:"150 M$",en:"$150M"}],["ABA Life",{fr:"Maroc · santé et IA",en:"Morocco · health and AI"},{fr:"40 M$",en:"$40M"}],["East Africa Foods",{fr:"Tanzanie · agriculture",en:"Tanzania · agriculture"},{fr:"40 M$",en:"$40M"}],["Satlyt",{fr:"Kenya · centres de données dans l'espace",en:"Kenya · data centres in space"},{fr:"8 M$",en:"$8M"}],["Rise of Fearless",{fr:"Éthiopie · jeu vidéo sur la bataille d'Adoua",en:"Ethiopia · game about the Battle of Adwa"},{fr:"1 M$",en:"$1M"}]];
+const POULS={fr:["<b>Bénin</b> — croissance de 8,2 % sur un an au premier semestre 2026, selon la mission du FMI.","<b>Ouganda</b> — First Circle Capital boucle un fonds de 26 M$ pour les fintechs africaines.","<b>Nigeria</b> — l'entrée en Bourse d'OPay à New York suspendue à la dernière minute."],en:["<b>Benin</b> — 8.2% year-on-year growth in the first half of 2026, according to the IMF mission.","<b>Uganda</b> — First Circle Capital closes a $26M fund for African fintechs.","<b>Nigeria</b> — OPay's New York listing suspended at the last minute."]};
+const SRC=[["Nairametrics — Top 10 African startups, October 2026","https://nairametrics.com/2026/11/10/mnt-halan-leads-top-10-african-startups-by-funding-in-october-2026/"],["Tekedia — Morocco and Tanzania lead October funding","https://www.tekedia.com/african-startups-raise-183-million-in-october-as-morocco-and-tanzania-lead-funding-surge/"],["Launch Base Africa — Deal tracker, 17 Nov 2026","https://launchbaseafrica.com/2026/11/17/african-startup-deal-tracker-newest-deals-25/"],["Daba Finance — First Circle Capital","https://dabafinance.com/fr/nouvelles/First-Circle-Capital-lve-un-fonds-de-26-millions-pour-soutenir-les-fintechs-africaines"],["Direction générale du Trésor — Brèves, 13 Nov 2026","https://www.tresor.economie.gouv.fr/Articles/421bc497-6518-4c11-b227-51a525e7ed90/files/07c96eec-a77f-4b44-bdf8-7517b58310ba"],["Tony Elumelu Foundation — 2026 programme","https://www.tonyelumelufoundation.org/?p=28248"]];
+const ALERTS={fr:[["08:00","Votre édition du mardi est arrivée","L'argent quitte les grandes capitales","rem",1],["mar.","Kenya : Satlyt lève 8 M$","Des centres de données pour l'IA, dans l'espace","fund",1],["lun.","Égypte : MNT-Halan entre en Bourse","150 M$ levés au Caire","fund",0],["lun.","Rappel : 5 minutes pour lire","Votre rendez-vous du mardi","rem",0]],en:[["08:00","Your Tuesday edition is here","Money is leaving the big hubs","rem",1],["Tue","Kenya: Satlyt raises $8M","Data centres for AI, in space","fund",1],["Mon","Egypt: MNT-Halan lists on the stock exchange","$150M raised in Cairo","fund",0],["Mon","Reminder: 5 minutes to read","Your Tuesday appointment","rem",0]]};
+const COUNTRIES=["RD Congo","Côte d'Ivoire","Sénégal","Cameroun","Nigeria","Kenya","Maroc","Afrique du Sud","Égypte","Ghana"];
+
+let S={onb:false,name:"",mail:"",lang:"fr",email:true,notif:true,remind:true,day:1,eco:true,c:["RD Congo","Côte d'Ivoire","Sénégal"],s:[0,1],filt:"all",done:{},loaded:{}};
+try{const v=JSON.parse(localStorage.getItem("griot")||"null");if(v)S={...S,...v,loaded:{}}}catch(e){}
+const save=()=>{try{const{loaded,...k}=S;localStorage.setItem("griot",JSON.stringify(k))}catch(e){}};
+const t=k=>T[S.lang][k];
+const $=id=>document.getElementById(id);
+const toast=m=>{const e=$("toast");e.textContent=m;e.classList.add("show");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("show"),1300)};
+
+const photo=(id,label)=>S.eco&&!S.loaded[id]
+ ?`<button class="ph big" data-load="${id}"><svg width="30" height="30"><use href="#cam"/></svg>${label}<span style="font-size:12px;border:1px solid currentColor;padding:3px 8px">${t("tapLoad")}</span></button>`
+ :`<div class="ph big"><svg width="30" height="30"><use href="#cam"/></svg>${t("photo")} · ${label}</div>`;
+
+const icons={edu:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',une:'<rect x="4" y="3" width="16" height="18"/><path d="M8 8h8M8 12h8M8 16h5"/>',ent:'<path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/>',alr:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',acc:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>'};
+
+function une(){return `
+<header class="mast"><h1>Le Griot <i>Éco</i></h1><svg width="38" height="38" role="img" aria-label="Logo"><use href="#logo"/></svg></header>
+<div class="dateline"><span>${t("date")}</span><span>${t("no")}</span></div>
+<p class="kick">${t("week")}</p>
+<h2 class="head">${t("title")}</h2>
+<p class="dek">${t("dek")}</p>
+<p class="meta">${t("read")}</p>
+<div class="audio"><button class="play" id="play" aria-label="${t("listen")}"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z" fill="currentColor"/></svg></button><span id="playL" style="font-weight:600">${t("listen")}</span></div>
+${photo("tanger","Tanger Med, Maroc")}
+<p class="cap"><b>Tanger Med, ${S.lang=="fr"?"Maroc":"Morocco"}.</b> ${S.lang=="fr"?"Photo : dossier de presse Tanger Med (à ajouter).":"Photo: Tanger Med press kit (to add)."}</p>
+<hr class="rule"><p class="kick">${t("mot")}</p><div class="body"><p>${t("motT")}</p></div>
+<hr class="rule"><p class="kick">${t("num")}</p>
+<div class="fig"><div class="n">${S.lang=="fr"?"46&nbsp;%":"46%"}</div><p style="margin:0;font-size:15px">${t("numT")}</p></div>
+<hr class="rule"><p class="kick">${t("raised")}</p>
+<div>${DEALS.map(d=>`<div class="row"><div><div class="co">${d[0]}</div><div class="meta">${d[1][S.lang]}</div></div><div class="amt">${d[2][S.lang]}</div></div>`).join("")}</div>
+<hr class="rule"><p class="kick">${t("loupe")}</p>
+<div class="card" data-go="article" role="button" tabindex="0"><h3>${t("loupeT")}</h3><p class="dek" style="font-size:16px">${t("loupeD")}</p><p style="margin:8px 0 0;font-weight:600;color:var(--red)">${t("readArt")}</p></div>
+<hr class="rule"><p class="kick">${t("pouls")}</p>
+<ul class="pouls">${POULS[S.lang].map(p=>`<li>${p}</li>`).join("")}</ul>
+<hr class="rule"><p class="kick">${t("opp")}</p><p class="meta" style="margin:0 0 8px">${t("oppI")}</p>
+<div class="opp"><h3 style="font-size:17px">${t("tef")}</h3><p class="meta" style="margin:0">${t("tefS")}</p><span class="dl">${t("tefD")}</span><br><a class="meta" href="https://www.tefconnect.com">TEFConnect.com</a></div>
+<div class="opp"><h3 style="font-size:17px">${t("fc")}</h3><p class="meta" style="margin:0">${t("fcS")}</p><span class="dl">${t("fcD")}</span></div>
+<hr class="rule"><p class="kick">${t("inv")}</p>
+<div class="card" data-go="investir" role="button" tabindex="0"><div style="display:flex;align-items:baseline;gap:10px"><span class="big2" style="font-size:34px;color:var(--green)">+58,7&nbsp;%</span><span class="meta">BRVM · ${t("ytd")}</span></div><p style="margin:8px 0 0;font-size:15px">${t("invCard")}</p><p style="margin:8px 0 0;font-weight:600;color:var(--red)">${t("open")}</p></div>
+<hr class="rule"><p class="kick">${t("eduT")}</p>
+<div class="card" data-go="ecole" role="button" tabindex="0"><div style="display:flex;align-items:center;gap:10px"><svg width="34" height="34" aria-hidden="true"><use href="#cowry"/></svg><span class="serif" style="font-weight:700;font-size:19px">${xp()} ${t("cauris")} · ${t("lvls")[lvl()]}</span></div><p style="margin:8px 0 0;font-size:15px">${t("eduCard")}</p><p style="margin:8px 0 0;font-weight:600;color:var(--red)">${t("open")}</p></div>
+<hr class="rule"><p class="kick">${t("video")}</p>
+<div class="video"><svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="#F3EEE4"/><path d="M22 17l17 11-17 11z" fill="#1C1A17"/></svg><span class="vbadge">${t("vidS")}</span></div>
+<p class="cap"><b class="serif" style="font-size:16px">${t("vidT")}</b></p>
+<hr class="rule"><p class="kick">${t("retenir")}</p><div class="body"><p>${t("retenirT")}</p></div>
+<hr class="rule"><p class="kick">${t("sources")}</p>
+${SRC.map(s=>`<div class="src"><a href="${s[1]}">${s[0]}</a></div>`).join("")}`}
+
+function article(){return `
+<div class="top"><button class="back" data-go="une">${t("back")}</button></div>
+<p class="kick">${t("loupe")} · ${S.lang=="fr"?"Tanzanie":"Tanzania"}</p>
+<h2 class="head">${t("loupeT")}</h2><p class="dek">${t("loupeD")}</p><p class="meta">${t("artBy")}</p>
+${photo("eaf","East Africa Foods")}
+<p class="cap"><b>${t("artCap")}</b> ${S.lang=="fr"?"Photo : East Africa Foods (à ajouter).":"Photo: East Africa Foods (to add)."}</p>
+<div class="body" style="margin-top:16px"><p class="drop">${t("artP1")}</p><div class="pull">${t("artPull")}</div><p>${t("artP2")}</p><p>${t("artP3")}</p></div>
+<p class="kick">${t("sources")}</p>
+<div class="src"><a href="${SRC[2][1]}">${SRC[2][0]}</a></div><div class="src"><a href="${SRC[0][1]}">${SRC[0][0]}</a></div>`}
+
+function ent(){return `
+<header class="mast" style="border-bottom:1px solid var(--ink)"><h1>${t("ent")}</h1></header>
+<h2 class="head" style="font-size:26px;margin-top:18px">${t("entT")}</h2><p style="color:var(--mute)">${t("entD")}</p>
+<p class="kick">${t("exemple")}</p>
+<div class="card" style="cursor:default"><h3>MNT-Halan</h3><p class="meta" style="margin:0 0 8px">Fintech · ${S.lang=="fr"?"Égypte · Bourse du Caire":"Egypt · Cairo stock exchange"}</p>
+<p style="font-weight:600;color:var(--green);margin:8px 0 4px">${t("salue")}</p>
+<p style="margin:0;font-size:15px">— ${S.lang=="fr"?"Entrée en Bourse : 150 M$ levés en octobre 2026 (Nairametrics)":"Stock market listing: $150M raised in October 2026 (Nairametrics)"}</p>
+<div class="lock"><div class="blur" aria-hidden="true"><p>— ··········· ············ ·······</p><p>— ········· ······ ·············</p><p>— ······ ········· ·····</p></div>
+<div class="gate"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><b class="serif" style="font-size:18px">${t("gate")}</b><span class="meta">${t("gateS")}</span></div></div></div>
+<button class="btn solid" id="notifyEnt">${t("notify")}</button>`}
+
+function alr(){const L=ALERTS[S.lang].filter(a=>S.filt=="all"||a[3]==S.filt);return `
+<header class="mast" style="border-bottom:1px solid var(--ink)"><h1>${t("alr")}</h1></header>
+<div class="seg" role="group">${["all","fund","rem"].map(k=>`<button data-filt="${k}" class="${S.filt==k?"on":""}">${t(k)}</button>`).join("")}</div>
+<p class="sec">${t("today")}</p>
+${L.map(a=>`<div class="alert ${a[4]?"new":""}"><div class="w">${a[0]}</div><div><div class="t">${a[1]}</div><div class="meta">${a[2]}</div></div></div>`).join("")}`}
+
+const sw=(k,l,s,extra="")=>`<div class="set"><div><div class="l">${l}</div><div class="s">${s}</div></div>${extra}<button class="sw" role="switch" aria-label="${l}" aria-checked="${S[k]}" data-sw="${k}"></button></div>`;
+function acc(){return `
+<header class="mast" style="border-bottom:1px solid var(--ink)"><h1>${t("acc")}</h1></header>
+<div class="who"><div class="av">${esc((S.name||"?")[0].toUpperCase())}</div><div><div style="font-weight:600">${esc(S.name)}</div><div class="meta">${esc(S.mail)}</div></div></div>
+<p class="sec">${t("lang")}</p>
+<div class="seg" role="group"><button data-lang="fr" class="${S.lang=="fr"?"on":""}">Français</button><button data-lang="en" class="${S.lang=="en"?"on":""}">English</button></div>
+<p class="sec">${t("receive")}</p>
+${sw("email",t("email"),esc(S.mail)+" · "+t("emailS"))}${sw("notif",t("notif"),t("notifS"))}
+${sw("remind",t("remind"),t("remindS"),`<select id="day" aria-label="${t("remind")}">${t("days").map((d,i)=>`<option value="${i}" ${S.day==i?"selected":""}>${d}</option>`).join("")}</select>`)}
+${sw("eco",t("eco"),t("ecoS"))}
+<p class="sec">${t("countries")}</p>
+<div>${COUNTRIES.map(c=>`<button class="chip" data-c="${c}" aria-pressed="${S.c.includes(c)}">${c}</button>`).join("")}</div>
+<p class="sec">${t("sectors")}</p>
+<div>${t("sectorsL").map((c,i)=>`<button class="chip" data-s="${i}" aria-pressed="${S.s.includes(i)}">${c}</button>`).join("")}</div>
+<p class="note">${t("liveNote")}</p>
+<button class="btn" id="logout" style="margin-top:20px">${t("logout")}</button>`}
+
+
+let step=0,errMsg="",whyAll=false;
+const bars=n=>`<div class="steps" aria-hidden="true">${[1,2,3].map(i=>`<i class="${i<=n?"on":""}"></i>`).join("")}</div>`;
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function onbView(){
+ if(step==0)return `<div class="onb">
+ <div style="display:flex;align-items:center;gap:12px"><svg width="52" height="52"><use href="#logo"/></svg><h1 class="serif" style="font-size:28px;margin:0">Le Griot <i style="font-weight:400">Éco</i></h1></div>
+ <div class="hero"><h2 class="head" style="margin:0 0 10px">${t("welT")}</h2><p class="dek" style="margin:0">${t("welS")}</p></div>
+ <p style="font:700 18px Gelasio,serif;margin:0 0 6px">${t("wel1")}</p><p style="margin:0 0 18px;font-size:16px">${t("wel2")}</p>
+ <p class="sec" style="margin-top:0">${t("chooseLang")}</p>
+ <div class="seg" role="group"><button data-lang="fr" class="${S.lang=="fr"?"on":""}">Français</button><button data-lang="en" class="${S.lang=="en"?"on":""}">English</button></div>
+ <div style="margin-top:auto;padding-top:20px"><button class="btn solid" data-step="5">${t("discover")}</button><button class="link" data-step="9" style="width:100%">${t("have")}</button></div></div>`;
+ if(step==5)return `<div class="onb">
+ <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><svg width="34" height="34"><use href="#logo"/></svg><span class="meta">Le Griot Éco</span></div>
+ <h2 class="head">${t("whyT")}</h2><p style="color:var(--mute);margin:0 0 12px">${t("whyS")}</p>
+ ${t("why").map((w,i)=>`<div class="why"><span class="k">${i+1}</span><div><b>${w[0]}</b><p>${w[1]}</p></div></div>`).join("")}
+ <div style="margin-top:auto;padding-top:20px"><button class="btn solid" data-step="1">${t("start")}</button><button class="link" data-step="0" style="width:100%">‹ ${S.lang=="fr"?"Retour":"Back"}</button></div></div>`;
+ if(step==9)return `<div class="onb"><button class="back" data-step="0" style="text-align:left">‹</button>
+ <h2 class="head">${t("loginT")}</h2><p style="color:var(--mute)">${t("loginS")}</p>
+ <form id="fLogin" novalidate><label class="field"><span>${t("mail")}</span><input id="lmail" type="email" autocomplete="email" inputmode="email" value="${esc(S.mail)}"></label>
+ <div class="err" id="err">${errMsg}</div><button class="btn solid" type="submit">${t("sendLink")}</button></form>
+ <p class="note">${t("prelaunch")}</p></div>`;
+ if(step==1)return `<div class="onb">${bars(1)}
+ <h2 class="head">${t("accT")}</h2><p style="color:var(--mute);margin:0">${t("accS")}</p>
+ <form id="fAcc" novalidate><label class="field"><span>${t("fname")}</span><input id="iname" autocomplete="given-name" value="${esc(S.name)}"></label>
+ <label class="field"><span>${t("mail")}</span><input id="imail" type="email" autocomplete="email" inputmode="email" value="${esc(S.mail)}"></label>
+ <div class="err" id="err">${errMsg}</div><button class="btn solid" type="submit">${t("next")}</button></form>
+ <button class="link" data-step="5">‹ ${S.lang=="fr"?"Retour":"Back"}</button></div>`;
+ if(step==2)return `<div class="onb">${bars(2)}
+ <h2 class="head">${t("intT")}</h2><p style="color:var(--mute);margin:0 0 6px">${t("intS")}</p>
+ <p class="sec">${t("countries")}</p><div>${COUNTRIES.map(c=>`<button class="chip" data-c="${c}" aria-pressed="${S.c.includes(c)}">${c}</button>`).join("")}</div>
+ <p class="sec">${t("sectors")}</p><div>${t("sectorsL").map((c,i)=>`<button class="chip" data-s="${i}" aria-pressed="${S.s.includes(i)}">${c}</button>`).join("")}</div>
+ <div class="err" id="err">${errMsg}</div>
+ <div style="margin-top:auto"><button class="btn solid" data-step="3">${t("next")}</button><button class="link" data-step="1">‹ ${S.lang=="fr"?"Retour":"Back"}</button></div></div>`;
+ return `<div class="onb">${bars(3)}
+ <h2 class="head">${t("notT")}</h2><p style="color:var(--mute);margin:0 0 10px">${t("notS")}</p>
+ ${sw("email",t("email"),esc(S.mail)||t("emailS"))}${sw("notif",t("notif"),t("notifS"))}
+ ${sw("remind",t("remind"),t("remindS"),`<select id="day" aria-label="${t("remind")}">${t("days").map((d,i)=>`<option value="${i}" ${S.day==i?"selected":""}>${d}</option>`).join("")}</select>`)}
+ ${sw("eco",t("eco"),t("ecoS"))}
+ <div style="margin-top:auto;padding-top:20px"><button class="btn solid" id="finish">${t("finish")}</button><button class="link" data-step="2">‹ ${S.lang=="fr"?"Retour":"Back"}</button></div></div>`;
+}
+const okMail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+document.addEventListener("submit",e=>{
+ e.preventDefault();
+ if(e.target.id=="fAcc"){const n=$("iname").value.trim(),m=$("imail").value.trim();S.name=n;S.mail=m;
+  if(!n){errMsg=t("errName");render();$("iname").focus();return}
+  if(!okMail(m)){errMsg=t("errMail");render();$("imail").focus();return}
+  errMsg="";step=2;save();render();window.scrollTo(0,0)}
+ if(e.target.id=="fLogin"){const m=$("lmail").value.trim();S.mail=m;
+  if(!okMail(m)){errMsg=t("errMail");render();return}
+  errMsg="";S.name=S.name||m.split("@")[0];S.onb=true;save();go("une")}
+});
+const SRCI=[["OECD — Africa Capital Markets Report 2025 (pension and insurance assets)","https://www.oecd.org/en/publications/2025/11/africa-capital-markets-report-2025_a973e07d/full-report/the-role-of-insurance-companies-and-pension-funds-as-institutional-investors-in-african-capital-markets_4889d177.html"],["Tekedia — African startup funding, Jan-Oct 2026","https://www.tekedia.com/african-startups-raise-183-million-in-october-as-morocco-and-tanzania-lead-funding-surge/"],["African Exponent — diaspora $124bn vs FDI $70bn (17 Nov 2026)","https://www.africanexponent.com/africas-diaspora-sent-home-124-billion-in-2025-nearly-double-the-foreign-investment-the-continent-received/"],["Capital Ethiopia — remittances and transfer costs (Sept 2026)","https://capitalethiopia.com/?p=82666"],["AllAfrica — BRVM, semaine au 4 sept. 2026","https://fr.allafrica.com/stories/202609070181.html"],["AllAfrica — BRVM, fin octobre 2026","https://fr.allafrica.com/stories/202610300665.html"],["AllAfrica — BRVM, 19 juin 2026","https://fr.allafrica.com/stories/202606220525.html"]];
+const BRVM=[["31/12/25",345.75],["10/02",379.07],["26/03",401.87],["19/06",442.87],["02/07",460.55],["03/08",485.43],["04/09",548.60],["24/09",531.63],["22/10",521.99],["fin oct.",534.71]];
+function chart(){const W=320,H=150,p=28,min=320,max=570,n=BRVM.length;
+ const x=i=>p+i*(W-p-8)/(n-1),y=v=>H-22-(v-min)/(max-min)*(H-36);
+ const pts=BRVM.map((d,i)=>`${x(i).toFixed(1)},${y(d[1]).toFixed(1)}`).join(" ");
+ const grid=[350,450,550].map(v=>`<line x1="${p}" x2="${W-4}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${p-4}" y="${y(v)+4}" font-size="10" text-anchor="end" fill="var(--mute)">${v}</text>`).join("");
+ const l=BRVM.length-1;
+ return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="BRVM Composite">${grid}
+ <polyline points="${pts}" fill="none" stroke="var(--red)" stroke-width="2.5"/>
+ <circle cx="${x(0)}" cy="${y(BRVM[0][1])}" r="3.5" fill="var(--ink)"/><circle cx="${x(6)}" cy="${y(BRVM[6][1])}" r="3.5" fill="var(--red)"/><circle cx="${x(l)}" cy="${y(BRVM[l][1])}" r="3.5" fill="var(--ink)"/>
+ <text x="${x(0)}" y="${H-6}" font-size="10" fill="var(--mute)">${S.lang=="fr"?"fin 2025":"end 2025"}</text><text x="${x(6)}" y="${y(BRVM[6][1])-8}" font-size="11" font-weight="600" text-anchor="middle" fill="var(--ink)">548,6</text><text x="${x(l)}" y="${H-6}" font-size="10" text-anchor="end" fill="var(--mute)">${S.lang=="fr"?"fin oct.":"end Oct"}</text></svg>`}
+function investir(){return `
+<div class="top"><button class="back" data-go="une">${t("backU")}</button></div>
+<p class="kick">${t("invK")}</p><h2 class="head">${t("invT")}</h2>
+<div class="disc">${t("invD")}</div>
+<hr class="rule"><p class="kick">${t("baro")}</p>
+<h3 style="font-size:17px">${t("brvmL")}</h3>
+<div style="display:flex;align-items:baseline;gap:10px"><span class="big2" style="color:var(--green)">+58,7&nbsp;%</span><span class="meta">${t("ytd")}</span></div>
+${chart()}<p class="cap">${t("brvmS")}. ${S.lang=="fr"?"Source : AllAfrica (relevés hebdomadaires).":"Source: AllAfrica (weekly reports)."}</p>
+<p class="meta">${t("otherX")}</p>
+<hr class="rule"><p class="kick">${t("stockT")}</p>
+<div class="big2" style="color:var(--ink)">${t("stockN")}</div><p class="meta" style="margin:4px 0 0">${t("stockL")}</p>
+<div class="body" style="margin-top:12px"><p>${t("stockP")}</p></div>
+<hr class="rule"><p class="kick">${t("diaT")}</p>
+${t("flows").map((f,i)=>`<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;gap:10px;font-size:15px"><span>${f[0]}</span><b style="white-space:nowrap">${f[2]}</b></div><div class="bar ${i==0?"r":""}" style="width:${Math.max(1.5,f[1]/124.2*100)}%"></div></div>`).join("")}
+<p class="cap">${t("flowS")}</p>
+<div class="body" style="margin-top:12px"><p>${t("dfi")}</p></div>
+<hr class="rule"><p class="kick">${t("eurT")}</p><div class="body"><p>${t("eurP")}</p></div>
+<hr class="rule"><p class="kick">${t("guideT")}</p><ol class="steps2">${t("guide").map(g=>`<li>${g}</li>`).join("")}</ol>
+<p class="kick">${t("riskT")}</p><ul class="risks">${t("risk").map(g=>`<li>${g}</li>`).join("")}</ul>
+<hr class="rule"><p class="kick">${t("trfT")}</p>
+<div style="display:flex;gap:14px;align-items:flex-start"><span class="big2" style="flex:none;color:var(--red)">7,2&nbsp;%</span><p style="margin:0;font-size:15px">${t("trfF")}</p></div>
+<div class="body" style="margin-top:12px"><p>${t("trfP")}</p></div>
+<div class="disc">${t("invD")}</div>
+<p class="kick">${t("sources")}</p>${SRCI.map(x=>`<div class="src"><a href="${x[1]}">${x[0]}</a></div>`).join("")}`}
+const LES=[
+{id:"action",fr:{t:"L'action",s:"Devenir copropriétaire d'une entreprise",p:["Une action est une petite part d'une entreprise. En l'achetant, vous devenez l'un de ses propriétaires, même pour un tout petit morceau.","Elle peut vous rapporter de deux façons : le dividende, une part des bénéfices que l'entreprise verse chaque année, et la plus-value, si vous revendez l'action plus cher que vous l'avez achetée.","Mais rien n'est garanti : si l'entreprise va mal, le prix de l'action peut baisser et le dividende disparaître."],ex:"Sonatel, l'opérateur télécom du Sénégal, est cotée à la BRVM, la Bourse régionale d'Abidjan. N'importe quel épargnant peut en acheter des actions via un intermédiaire agréé.",q:[["Vous achetez une action de Sonatel. Que devenez-vous ?",["Un client prioritaire de Sonatel","Copropriétaire d'une petite part de l'entreprise","Un prêteur de Sonatel"],1,"Une action est une part de propriété. Un prêteur, lui, achète une obligation (prochaine leçon)."],["Comment s'appelle la part des bénéfices versée aux actionnaires ?",["Le dividende","L'intérêt","La commission"],0,"Le dividende est la part des bénéfices distribuée aux actionnaires. Il n'est jamais garanti."]]},
+en:{t:"Shares",s:"Owning a piece of a company",p:["A share is a small slice of a company. When you buy one, you become one of its owners, even of a tiny piece.","It can pay you in two ways: the dividend, a share of the profits the company pays out each year, and capital gains, if you sell the share for more than you paid.","But nothing is guaranteed: if the company struggles, the share price can fall and the dividend can disappear."],ex:"Sonatel, Senegal's telecoms operator, is listed on the BRVM, the regional stock exchange in Abidjan. Any saver can buy its shares through a licensed broker.",q:[["You buy a Sonatel share. What do you become?",["A priority Sonatel customer","Co-owner of a small piece of the company","A lender to Sonatel"],1,"A share is a piece of ownership. A lender buys a bond instead (next lesson)."],["What is the share of profits paid to shareholders called?",["The dividend","Interest","A commission"],0,"The dividend is the share of profits paid out to shareholders. It is never guaranteed."]]}},
+{id:"obligation",fr:{t:"L'obligation",s:"Prêter de l'argent contre des intérêts",p:["Quand un État ou une entreprise a besoin d'argent, il peut l'emprunter auprès du public en émettant des obligations.","Acheter une obligation, c'est prêter : vous recevez des intérêts réguliers, puis votre argent vous est rendu à une date fixée d'avance, l'échéance.","C'est en général moins risqué qu'une action, mais cela rapporte souvent moins. Le risque principal : que l'emprunteur ne puisse pas rembourser."],ex:"Les États d'Afrique de l'Ouest, comme la Côte d'Ivoire ou le Sénégal, empruntent régulièrement sur le marché régional en émettant des obligations. Une partie est cotée à la BRVM.",q:[["Vous achetez une obligation de l'État. Vous êtes…",["Propriétaire d'une partie du pays","Prêteur à l'État","Actionnaire de la banque centrale"],1,"Une obligation est un prêt : l'État vous verse des intérêts et vous rembourse à l'échéance."],["Quel est le principal risque d'une obligation ?",["Que l'emprunteur ne rembourse pas","Que l'action monte trop vite","Qu'il n'y ait pas de dividende"],0,"Le risque central d'un prêt, c'est le défaut : l'emprunteur n'arrive plus à payer."]]},
+en:{t:"Bonds",s:"Lending money for interest",p:["When a government or a company needs money, it can borrow from the public by issuing bonds.","Buying a bond means lending: you receive regular interest, then your money is paid back on a date set in advance, the maturity.","It is usually less risky than a share, but often pays less. The main risk: the borrower cannot pay you back."],ex:"West African states such as Côte d'Ivoire and Senegal regularly borrow on the regional market by issuing bonds. Some are listed on the BRVM.",q:[["You buy a government bond. You are…",["Owner of part of the country","A lender to the government","A shareholder in the central bank"],1,"A bond is a loan: the government pays you interest and repays you at maturity."],["What is the main risk of a bond?",["The borrower fails to repay","The share price rises too fast","There is no dividend"],0,"The core risk of any loan is default: the borrower can no longer pay."]]}},
+{id:"inflation",fr:{t:"L'inflation",s:"Pourquoi l'argent qui dort perd de la valeur",p:["L'inflation, c'est la hausse générale des prix. Quand elle est de 10 % sur un an, ce qui coûtait 1 000 coûte 1 100 un an plus tard.","Résultat : l'argent gardé sous le matelas achète de moins en moins de choses, même si le nombre de billets ne change pas.","Pour protéger son épargne, il faut qu'elle rapporte au moins autant que l'inflation. C'est l'une des premières raisons d'investir."],ex:"Là où l'inflation est forte, beaucoup de familles achètent des biens durables — un terrain, du bétail, des matériaux de construction — plutôt que de garder des billets. C'est une manière de se protéger de la hausse des prix.",q:[["L'inflation est de 10 % cette année. Vos 100 000 sont restés sous le matelas. Dans un an…",["Ils achètent plus de choses","Ils achètent autant de choses","Ils achètent moins de choses"],2,"Les prix ont monté de 10 % : vos 100 000 n'achètent plus que l'équivalent d'environ 90 900 d'aujourd'hui."],["Pour ne pas perdre de pouvoir d'achat, votre épargne doit rapporter…",["Au moins autant que l'inflation","Moins que l'inflation","Rien du tout, c'est plus sûr"],0,"Si votre épargne rapporte moins que l'inflation, elle perd de la valeur chaque année, même sans perte visible."]]},
+en:{t:"Inflation",s:"Why idle money loses value",p:["Inflation is a general rise in prices. At 10% a year, what cost 1,000 costs 1,100 a year later.","So money kept under the mattress buys less and less, even though the number of notes stays the same.","To protect your savings, they need to earn at least as much as inflation. That is one of the first reasons to invest."],ex:"Where inflation is high, many families buy lasting assets — land, livestock, building materials — rather than holding cash. It is a way to shield themselves from rising prices.",q:[["Inflation is 10% this year. Your 100,000 stayed under the mattress. In a year…",["It buys more","It buys the same","It buys less"],2,"Prices rose 10%: your 100,000 now buys only what about 90,900 buys today."],["To keep your purchasing power, your savings must earn…",["At least as much as inflation","Less than inflation","Nothing at all, it's safer"],0,"If your savings earn less than inflation, they lose value every year, even with no visible loss."]]}},
+{id:"composes",fr:{t:"Les intérêts composés",s:"Quand l'argent fait des petits",p:["La tontine est une excellente façon d'épargner ensemble. Mais l'argent n'y grossit pas : on récupère ce qu'on a mis.","Avec un placement qui rapporte des intérêts, les intérêts de l'an 1 rapportent eux-mêmes des intérêts l'an 2, et ainsi de suite. C'est l'effet boule de neige des intérêts composés.","Le secret, c'est le temps : plus on commence tôt, plus la boule de neige grossit."],ex:"100 000 FCFA placés à 8 % par an pendant 10 ans deviennent environ 215 900 FCFA. Sans réinvestir les intérêts (8 000 par an mis de côté), on n'aurait que 180 000 FCFA.",q:[["Vous placez 1 000 à 10 % par an, intérêts réinvestis. Combien avez-vous après 2 ans ?",["1 200","1 210","1 100"],1,"An 1 : 1 000 + 100 = 1 100. An 2 : 1 100 + 110 = 1 210. Les 10 de plus, ce sont les intérêts sur les intérêts."],["Quel est le meilleur allié des intérêts composés ?",["Le temps","La chance","Retirer ses gains chaque année"],0,"Plus l'argent reste placé longtemps, plus l'effet boule de neige est fort. Retirer ses gains l'arrête."]]},
+en:{t:"Compound interest",s:"When money grows on money",p:["A tontine is a great way to save together. But the money doesn't grow: you get back what you put in.","With an investment that pays interest, year 1's interest earns its own interest in year 2, and so on. That's the snowball effect of compound interest.","The secret is time: the earlier you start, the bigger the snowball."],ex:"100,000 CFA francs invested at 8% a year for 10 years become about 215,900 CFA. Without reinvesting the interest (8,000 a year set aside), you would have only 180,000 CFA.",q:[["You invest 1,000 at 10% a year, interest reinvested. How much after 2 years?",["1,200","1,210","1,100"],1,"Year 1: 1,000 + 100 = 1,100. Year 2: 1,100 + 110 = 1,210. The extra 10 is interest on interest."],["What is compound interest's best friend?",["Time","Luck","Taking your gains out every year"],0,"The longer money stays invested, the stronger the snowball. Taking gains out stops it."]]}},
+{id:"diversifier",fr:{t:"Diversifier",s:"Ne pas mettre tous ses œufs dans le même panier",p:["Diversifier, c'est répartir son argent entre plusieurs entreprises, plusieurs secteurs, voire plusieurs pays.","Si une entreprise va mal, les autres peuvent compenser. On réduit le risque de tout perdre d'un coup.","La diversification ne supprime pas le risque, mais elle évite qu'une seule mauvaise nouvelle ruine toute votre épargne."],ex:"Une commerçante de Kinshasa qui vend du riz, de l'huile et du savon souffre moins si le prix du riz s'effondre qu'une autre qui ne vend que du riz. En Bourse, c'est le même principe.",q:[["Aïcha a 500 000 à investir. Quelle option est la plus diversifiée ?",["Tout dans une seule entreprise de télécoms","Un peu dans une banque, une entreprise agricole et une entreprise d'énergie","Tout dans deux opérateurs télécoms"],1,"Trois secteurs différents : si l'un traverse une crise, les deux autres peuvent tenir."],["La diversification permet…",["De supprimer tout risque","De réduire le risque de tout perdre d'un coup","De garantir un gain"],1,"Aucun placement n'est sans risque. Diversifier réduit l'impact d'un mauvais choix, sans rien garantir."]]},
+en:{t:"Diversify",s:"Don't put all your eggs in one basket",p:["Diversifying means spreading your money across several companies, several sectors, even several countries.","If one company does badly, the others can make up for it. You lower the risk of losing everything at once.","Diversification doesn't remove risk, but it stops a single piece of bad news from wiping out all your savings."],ex:"A Kinshasa trader who sells rice, oil and soap suffers less when the price of rice collapses than one who sells only rice. On the stock market, the principle is the same.",q:[["Aïcha has 500,000 to invest. Which option is the most diversified?",["All in one telecoms company","Some in a bank, a farming company and an energy company","All in two telecoms operators"],1,"Three different sectors: if one hits a crisis, the other two can hold up."],["Diversification lets you…",["Remove all risk","Lower the risk of losing everything at once","Guarantee a gain"],1,"No investment is risk-free. Diversifying reduces the impact of one bad choice, without guaranteeing anything."]]}},
+{id:"levee",fr:{t:"La levée de fonds",s:"Comment les startups trouvent de l'argent",p:["Une startup qui veut grandir vite a besoin d'argent avant d'être rentable. Elle vend alors une partie de son capital à des investisseurs : c'est une levée de fonds.","On parle d'amorçage pour les premiers tours, souvent modestes, puis de série A, série B… quand les montants grossissent.","Les fondateurs possèdent une part de plus en plus petite de l'entreprise : c'est la dilution. En échange, l'entreprise a les moyens de grandir."],ex:"En octobre 2026, East Africa Foods (Tanzanie) a levé 40 millions de dollars auprès d'InfraCo Africa, Oikocredit et FMO pour acheter, stocker et transformer les récoltes des petits fermiers.",q:[["Lors d'une levée de fonds, la startup donne aux investisseurs…",["Une partie de son capital","Un prêt à rembourser en un an","Rien, c'est un don"],0,"Les investisseurs deviennent copropriétaires : ils parient sur la croissance future de l'entreprise."],["Après plusieurs levées, la part des fondateurs…",["Augmente","Diminue : c'est la dilution","Reste toujours la même"],1,"À chaque tour, de nouvelles parts sont créées pour les investisseurs, donc la part des fondateurs diminue."]]},
+en:{t:"Fundraising",s:"How startups find money",p:["A startup that wants to grow fast needs money before it turns a profit. So it sells part of its capital to investors: that's a funding round.","Early rounds, often modest, are called seed; then come Series A, Series B… as amounts grow.","Founders end up owning a smaller and smaller share of the company: that's dilution. In return, the company gets the means to grow."],ex:"In October 2026, East Africa Foods (Tanzania) raised $40 million from InfraCo Africa, Oikocredit and FMO to buy, store and process smallholder farmers' harvests.",q:[["In a funding round, the startup gives investors…",["Part of its capital","A loan to repay within a year","Nothing, it's a gift"],0,"Investors become co-owners: they are betting on the company's future growth."],["After several rounds, the founders' share…",["Grows","Shrinks: that's dilution","Always stays the same"],1,"Each round creates new shares for investors, so the founders' share shrinks."]]}},
+{id:"brvm",fr:{t:"La BRVM",s:"La Bourse commune de l'Afrique de l'Ouest",p:["La BRVM, Bourse régionale des valeurs mobilières, est installée à Abidjan. Elle est commune à 8 pays : Bénin, Burkina Faso, Côte d'Ivoire, Guinée-Bissau, Mali, Niger, Sénégal et Togo.","On y achète et vend des actions et des obligations, en francs CFA, par l'intermédiaire d'une SGI, une société de gestion et d'intermédiation agréée.","Un atout : le franc CFA d'Afrique de l'Ouest est lié à l'euro par un taux fixe, ce qui limite le risque de change pour qui raisonne en euros."],ex:"Au 4 septembre 2026, l'indice BRVM Composite avait gagné 58,7 % depuis le 1er janvier. Mais une Bourse peut aussi baisser : les gains passés ne garantissent rien.",q:[["Combien de pays partagent la BRVM ?",["3","8","15"],1,"Les 8 pays de l'UEMOA : Bénin, Burkina Faso, Côte d'Ivoire, Guinée-Bissau, Mali, Niger, Sénégal et Togo."],["Combien de francs CFA vaut 1 euro, au taux fixe ?",["100 FCFA","655,957 FCFA","1 000 FCFA"],1,"Le taux est fixe depuis 1999 : 1 € = 655,957 FCFA."]]},
+en:{t:"The BRVM",s:"West Africa's shared stock exchange",p:["The BRVM, West Africa's regional stock exchange, is based in Abidjan. It is shared by 8 countries: Benin, Burkina Faso, Côte d'Ivoire, Guinea-Bissau, Mali, Niger, Senegal and Togo.","Shares and bonds are bought and sold there in CFA francs, through an SGI, a licensed brokerage firm.","An edge: the West African CFA franc is pegged to the euro at a fixed rate, which limits currency risk for anyone who thinks in euros."],ex:"As of 4 September 2026, the BRVM Composite index was up 58.7% since 1 January. But markets can fall too: past gains guarantee nothing.",q:[["How many countries share the BRVM?",["3","8","15"],1,"The 8 WAEMU countries: Benin, Burkina Faso, Côte d'Ivoire, Guinea-Bissau, Mali, Niger, Senegal and Togo."],["How many CFA francs is €1 worth at the fixed rate?",["100 CFA","655.957 CFA","1,000 CFA"],1,"The rate has been fixed since 1999: €1 = 655.957 CFA francs."]]}}
+];
+const LV=[0,40,90,140];
+const xp=()=>Object.values(S.done||{}).reduce((a,b)=>a+b,0)*10;
+const lvl=()=>LV.filter(v=>xp()>=v).length-1;
+let L=null;
+function ecole(){const x=xp(),li=lvl(),nx=LV[li+1],lv=t("lvls");
+ const pct=nx?Math.round((x-LV[li])/(nx-LV[li])*100):100;
+ return `<header class="mast" style="border-bottom:1px solid var(--ink)"><h1>${t("eduT")}</h1><svg width="36" height="36" aria-hidden="true"><use href="#cowry"/></svg></header>
+<p style="margin:14px 0 0;font-size:15px">${t("eduS")}</p>
+<div class="hero" style="margin:16px 0;padding:16px 0"><p class="kick" style="margin:0 0 4px">${t("lvl")}</p>
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap"><span class="big2" style="font-size:clamp(26px,7vw,34px);white-space:normal">${lv[li]}</span><span style="display:flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap"><svg width="20" height="20" aria-hidden="true"><use href="#cowry"/></svg>${x} ${t("cauris")}</span></div>
+<div class="prog"><i style="width:${pct}%"></i></div>
+<p class="meta" style="margin:0">${nx?t("nextLvl").replace("{n}",nx-x).replace("{l}",lv[li+1]):t("maxLvl")}</p></div>
+<p class="kick">${t("lessons")}</p>
+${LES.map((l,i)=>{const d=S.done[l.id],n=l[S.lang].q.length;return `<button class="les" data-les="${l.id}"><span class="k">${i+1}</span><span><b class="serif" style="font-size:17px;display:block">${l[S.lang].t}</b><span class="meta">${l[S.lang].s}</span></span><span class="st ${d==n?"ok":""}">${d==null?t("min3"):d+"/"+n}</span></button>`}).join("")}
+<div class="disc">${t("eduD")}</div>`}
+function lecon(){if(!L)return ecole();const l=LES.find(x=>x.id==L.id),c=l[S.lang],n=c.q.length,idx=LES.indexOf(l);
+ const top=`<div class="top"><button class="back" data-go="ecole">${t("backE")}</button><span class="meta">${t("lesN")} ${idx+1}/${LES.length}</span></div>`;
+ if(L.ph=="read")return top+`<p class="kick">${t("eduT")}</p><h2 class="head">${c.t}</h2><p class="dek">${c.s}</p><p class="meta">${t("min3")} · ${n} ${t("qs")}</p>
+<div class="body" style="margin-top:14px">${c.p.map((p,i)=>`<p class="${i==0?"drop":""}">${p}</p>`).join("")}</div>
+<div class="ex"><p class="kick" style="margin:0 0 4px">${t("exK")}</p>${c.ex}</div>
+<button class="btn solid" data-ph="quiz">${t("toQuiz")}</button>`;
+ if(L.ph=="quiz"){const q=c.q[L.i],on=L.pk!=null,ok=L.pk==q[2];return top+`<p class="kick">${t("qOf")} ${L.i+1}/${n}</p><div class="prog"><i style="width:${(L.i+(on?1:0))/n*100}%"></i></div>
+<h2 class="head" style="font-size:clamp(22px,6vw,28px);margin-top:14px">${q[0]}</h2>
+${q[1].map((o,j)=>`<button class="opt ${on&&j==q[2]?"ok":on&&j==L.pk?"no":""}" data-opt="${j}" ${on?"disabled":""}>${o}</button>`).join("")}
+${on?`<div class="fb" role="status"><b style="color:${ok?"var(--green)":"var(--red)"}">${ok?t("good"):t("bad")}</b>${q[3]}</div><button class="btn solid" data-nx="1">${L.i<n-1?t("nxt"):t("seeRes")}</button>`:""}`}
+ const nl=LES[idx+1];
+ return top+`<div class="hero" style="text-align:center"><svg width="56" height="56" aria-hidden="true"><use href="#cowry"/></svg><h2 class="head" style="margin:8px 0">${t("finT")}</h2><p class="dek">${t("finS").replace("{g}",L.g).replace("{n}",n)}</p>
+${L.earn?`<p class="big2" style="color:var(--red);margin:14px 0 0">+${L.earn} ${t("cauris")}</p>`:`<p class="meta" style="margin:12px 0 0">${t("noNew")}</p>`}</div>
+${nl?`<button class="btn solid" data-les="${nl.id}">${t("nextLes")} : ${nl[S.lang].t}</button>`:""}
+<button class="btn" data-retry="1">${t("retry")}</button><button class="btn" data-go="ecole">${t("backE")}</button>`}
+const VIEWS={investir,une,article,ecole,lecon,entreprises:ent,alertes:alr,compte:acc};
+const TABMAP=[["une","une"],["ecole","edu"],["entreprises","ent"],["alertes","alr"],["compte","acc"]];
+function render(){
+ document.documentElement.lang=S.lang;
+ if(!S.onb){$("view").innerHTML=onbView();$("tabs").parentElement.style.display="none";return}
+ $("tabs").parentElement.style.display="";
+ let v=(location.hash||"#une").slice(1);if(!VIEWS[v])v="une";
+ $("view").innerHTML=VIEWS[v]();
+ const cur=v=="lecon"?"ecole":(v=="article"||v=="investir")?"une":v;
+ $("tabs").innerHTML=TABMAP.map(([h,k])=>`<button class="tab ${cur==h?"on":""}" data-go="${h}" ${cur==h?'aria-current="page"':""}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">${icons[k]}</svg>${t(k)}</button>`).join("");
+}
+function go(h){if(location.hash=="#"+h)render();else location.hash=h;window.scrollTo(0,0)}
+window.addEventListener("hashchange",()=>{stopAudio();render();window.scrollTo(0,0)});
+
+let speaking=false;
+function stopAudio(){try{speechSynthesis.cancel()}catch(e){}speaking=false}
+function toggleAudio(){
+ if(!("speechSynthesis" in window)){toast(t("noAudio"));return}
+ if(speaking){stopAudio();$("playL").textContent=t("listen");return}
+ try{
+  const txt=[t("title"),t("dek"),t("motT"),"46 %. "+t("numT"),t("loupeT")+". "+t("loupeD"),POULS[S.lang].join(" ").replace(/<[^>]+>/g,""),t("retenirT")].join(". ");
+  const u=new SpeechSynthesisUtterance(txt);u.lang=S.lang=="fr"?"fr-FR":"en-GB";u.rate=1;
+  u.onend=()=>{speaking=false;const l=$("playL");if(l)l.textContent=t("listen")};
+  speechSynthesis.speak(u);speaking=true;$("playL").textContent=t("stop");
+ }catch(e){toast(t("noAudio"))}
+}
+
+document.addEventListener("click",e=>{
+ const b=e.target.closest("button,[data-go]");if(!b)return;
+ if(b.dataset.go){go(b.dataset.go);return}
+ if(b.dataset.les){L={id:b.dataset.les,ph:"read",i:0,pk:null,g:0,earn:0};go("lecon");return}
+ if(b.dataset.ph&&L){L.ph="quiz";render();window.scrollTo(0,0);return}
+ if(b.dataset.opt&&L){if(L.pk!=null)return;L.pk=+b.dataset.opt;if(L.pk==LES.find(x=>x.id==L.id)[S.lang].q[L.i][2])L.g++;render();return}
+ if(b.dataset.nx&&L){const n=LES.find(x=>x.id==L.id)[S.lang].q.length;if(L.i<n-1){L.i++;L.pk=null}else{const o=S.done[L.id]||0;L.earn=Math.max(0,L.g-o)*10;if(S.done[L.id]==null||L.g>o)S.done[L.id]=Math.max(L.g,o);L.ph="end";save()}render();window.scrollTo(0,0);return}
+ if(b.dataset.retry&&L){L={id:L.id,ph:"quiz",i:0,pk:null,g:0,earn:0};render();window.scrollTo(0,0);return}
+ if(b.dataset.step){const n=+b.dataset.step;if(n==3&&!S.c.length){errMsg=t("errInt");render();return}errMsg="";step=n;render();window.scrollTo(0,0);return}
+ if(b.id=="whyToggle"){whyAll=!whyAll;render();return}
+ if(b.id=="finish"){S.onb=true;save();location.hash="une";render();window.scrollTo(0,0);return}
+ if(b.id=="logout"){stopAudio();S.onb=false;step=0;save();render();window.scrollTo(0,0);return}
+ if(b.id=="play"){toggleAudio();return}
+ if(b.dataset.load){S.loaded[b.dataset.load]=1;render();return}
+ if(b.dataset.filt){S.filt=b.dataset.filt;render();return}
+ if(b.dataset.lang){stopAudio();S.lang=b.dataset.lang;save();render();return}
+ if(b.dataset.sw){S[b.dataset.sw]=!S[b.dataset.sw];if(b.dataset.sw=="eco")S.loaded={};save();b.setAttribute("aria-checked",S[b.dataset.sw]);return}
+ if(b.dataset.c){const c=b.dataset.c;S.c=S.c.includes(c)?S.c.filter(x=>x!=c):[...S.c,c];save();b.setAttribute("aria-pressed",S.c.includes(c));return}
+ if(b.dataset.s){const i=+b.dataset.s;S.s=S.s.includes(i)?S.s.filter(x=>x!=i):[...S.s,i];save();b.setAttribute("aria-pressed",S.s.includes(i));return}
+ if(b.id=="notifyEnt"){toast(t("done"));return}
+});
+document.addEventListener("keydown",e=>{if(e.key=="Enter"&&e.target.dataset&&e.target.dataset.go)go(e.target.dataset.go)});
+document.addEventListener("change",e=>{if(e.target.id=="day"){S.day=+e.target.value;save()}});
+render();
+}
+</script>
+</body>
+</html>
